@@ -1,3 +1,30 @@
+function showProjectCards(projects) {
+  projects.forEach(project => {
+    const card = document.createElement("div");
+    card.className = "message bot project-card-chat";
+    card.innerHTML = `
+      <strong>${project.name}</strong>
+      <p>${project.description}</p>
+      <a href="${project.url}" target="_blank">🔗 View on GitHub</a>
+    `;
+    chatArea.appendChild(card);
+  });
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+// ===== AI MEMORY =====
+let botMemory = {
+  lastProject: null,
+  lastTopic: null
+};
+// ===== PORTFOLIO DATA =====
+const portfolioData = {
+  name: "Rithish Kannan",
+  github: "https://github.com/Rithish4610",
+  linkedin: "https://www.linkedin.com/in/rithish-kannan-22032007r/",
+  resume: "assets/Rithish_resume.pdf",
+  username: "Rithish4610",
+  projects: []
+};
 // ===== TYPING ANIMATION FOR BOT REPLIES =====
 function typeBotMessage(text) {
   const msg = document.createElement("div");
@@ -88,6 +115,27 @@ async function fetchStarredRepos() {
   return await res.json();
 }
 
+// ===== LOAD PROJECTS FOR AI BOT =====
+async function loadProjectsForBot() {
+  try {
+    const res = await fetch(`https://api.github.com/users/${portfolioData.username}/repos`);
+    const data = await res.json();
+
+    portfolioData.projects = data
+      .filter(repo => repo.owner.login === portfolioData.username)
+      .map(repo => ({
+        name: repo.name,
+        description: repo.description || "No description provided",
+        url: repo.html_url,
+        stars: repo.stargazers_count
+      }));
+  } catch (err) {
+    console.error("Failed to load projects for bot", err);
+  }
+}
+
+loadProjectsForBot();
+
 function renderProjects(projects) {
   projectsGrid.innerHTML = "";
   projects.forEach(repo => {
@@ -130,43 +178,81 @@ function addMessage(text, type) {
 function getBotReply(message) {
   const text = message.toLowerCase();
 
+  // Greetings
   if (text.includes("hi") || text.includes("hello")) {
-    return "Hello 👋 I'm Rithish's AI assistant. Ask me about his skills, projects, education, or contact details!";
+    botMemory.lastTopic = "greeting";
+    return `Hello 👋 I'm Rithish's AI assistant.\nAsk me about his projects, GitHub, LinkedIn, or resume.`;
   }
 
-  if (text.includes("name")) {
-    return "His name is Rithish Kannan, a Computer Science student specializing in AI & ML.";
-  }
-
-  if (text.includes("skills")) {
-    return "Rithish is skilled in Python, C, C++, HTML, CSS, JavaScript, and AI/ML. He is currently learning Java and full-stack development.";
-  }
-
-  if (text.includes("projects")) {
-    return "Rithish has built multiple real-world projects including web apps, games, AI-based systems, and automation tools. You can explore them above in the Projects section 🚀";
-  }
-
-  if (text.includes("education") || text.includes("study")) {
-    return "Rithish is currently a 2nd year BE Computer Science student specializing in Artificial Intelligence & Machine Learning (AIML).";
-  }
-
+  // Resume
   if (text.includes("resume") || text.includes("cv")) {
-    return "You can download Rithish's resume using the 'Download Resume' button on this page 📄";
+    window.open(portfolioData.resume, "_blank");
+    botMemory.lastTopic = "resume";
+    return "📄 Opening Rithish's resume.";
   }
 
-  if (text.includes("contact") || text.includes("email") || text.includes("phone")) {
-    return "You can contact Rithish via email at rithish4610@gmail.com or phone at 9363613681.";
-  }
-
+  // GitHub
   if (text.includes("github")) {
-    return "Here is Rithish's GitHub profile: https://github.com/Rithish4610";
+    window.open(portfolioData.github, "_blank");
+    botMemory.lastTopic = "github";
+    return "🚀 Opening GitHub profile.";
   }
 
+  // LinkedIn
   if (text.includes("linkedin")) {
-    return "Here is Rithish's LinkedIn profile: https://www.linkedin.com/in/rithish-kannan-22032007r/";
+    window.open(portfolioData.linkedin, "_blank");
+    botMemory.lastTopic = "linkedin";
+    return "💼 Opening LinkedIn profile.";
   }
 
-  return "🤖 I didn’t quite understand that. Try asking about skills, projects, education, resume, or contact details.";
+  // Specific project name detection
+  if (portfolioData.projects.length > 0) {
+    const foundProject = portfolioData.projects.find(p =>
+      text.includes(p.name.toLowerCase())
+    );
+
+    if (foundProject) {
+      botMemory.lastProject = foundProject;
+      botMemory.lastTopic = "project-detail";
+      setTimeout(() => showProjectCards([foundProject]), 400);
+      return `Here’s a project by Rithish called **${foundProject.name}** 👇`;
+    }
+  }
+
+  // Follow-up like "tell me more"
+  if (
+    (text.includes("more") || text.includes("explain")) &&
+    botMemory.lastProject
+  ) {
+    return `${botMemory.lastProject.name} focuses on:\n${botMemory.lastProject.description}\n\nYou can check the source code using the GitHub link above 👆`;
+  }
+
+  // Projects overview
+  if (text.includes("project")) {
+    botMemory.lastTopic = "projects";
+
+    const topProjects = portfolioData.projects
+      .sort((a, b) => b.stars - a.stars)
+      .slice(0, 3);
+
+    setTimeout(() => showProjectCards(topProjects), 400);
+
+    return `⭐ Rithish has built ${portfolioData.projects.length} projects.\nHere are some top ones:`;
+  }
+
+  // Skills
+  if (text.includes("skill")) {
+    botMemory.lastTopic = "skills";
+    return "💡 Skills: Python, C, C++, HTML, CSS, JavaScript, AI & ML. Currently learning Java & full-stack development.";
+  }
+
+  // Contact
+  if (text.includes("contact") || text.includes("email") || text.includes("phone")) {
+    botMemory.lastTopic = "contact";
+    return "📧 Email: rithish4610@gmail.com\n📱 Phone: 9363613681";
+  }
+
+  return "🤖 You can ask me about projects, a specific project name, GitHub, resume, or contact details.";
 }
 
 input.addEventListener("input", () => { typingText.textContent = input.value; sendBtn.disabled = input.value.trim() === ""; });
