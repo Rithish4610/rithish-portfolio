@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rithish Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+
+  <!-- NAVBAR -->
+  <nav>
+    <h1>Rithish</h1>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#ai-bot">AI Bot</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h2>Hi, I'm <span>Rithish</span></h2>
+    <p>AI & ML Student | Full Stack Developer</p>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      I am a passionate Computer Science student specializing in AI & ML.
+      Skilled in Python, C, C++, and currently learning Java. I build real-world
+      projects and solve problems through technology while continuously learning.
+    </p>
+    <p>
+      <a href="https://github.com/Rithish4610" target="_blank">GitHub</a> |
+      <a href="https://www.linkedin.com/in/rithish-kannan-22032007r" target="_blank">LinkedIn</a>
+    </p>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skill">HTML<div class="bar"><span style="width:90%"></span></div></div>
+    <div class="skill">CSS<div class="bar"><span style="width:85%"></span></div></div>
+    <div class="skill">JavaScript<div class="bar"><span style="width:80%"></span></div></div>
+    <div class="skill">Python<div class="bar"><span style="width:75%"></span></div></div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <h2>My Projects</h2>
+    <div class="projects-grid" id="projects-grid"></div>
+    <button id="show-all-btn">Show All Projects</button>
+  </section>
+
+  <!-- AI CHATBOT -->
+  <section id="ai-bot">
+    <h2>AI Assistant 🤖</h2>
+    <div class="chat-container">
+      <div id="typing-frame">You are typing: <span id="typing-text"></span></div>
+      <div id="chat-area"></div>
+      <div id="typing-indicator">Bot is typing...</div>
+      <div class="chat-input">
+        <input type="text" id="chat-input" placeholder="Ask about Rithish..." autocomplete="off"/>
+        <button id="send-btn" disabled>Send</button>
+      </div>
+      <button id="clear-btn">Clear Chat</button>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <div class="contact-cards">
+      <a href="https://github.com/Rithish4610" target="_blank" class="contact-card github">
+        <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" />
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.linkedin.com/in/rithish-kannan-22032007r" target="_blank" class="contact-card linkedin">
+        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" />
+        <span>LinkedIn</span>
+      </a>
+      <a href="mailto:rithish4610@gmail.com" class="contact-card email">
+        <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" />
+        <span>rithish4610@gmail.com</span>
+      </a>
+      <a href="tel:9363613681" class="contact-card phone">
+        <img src="https://cdn-icons-png.flaticon.com/512/597/597177.png" alt="Phone" />
+        <span>9363613681</span>
+      </a>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
