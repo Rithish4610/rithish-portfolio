@@ -1,3 +1,34 @@
+// ===== ACTIVE NAV LINK ON SCROLL =====
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".nav-box");
+
+window.addEventListener("scroll", () => {
+  let current = "";
+
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 120;
+    if (pageYOffset >= sectionTop) {
+      current = section.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove("active");
+    if (link.getAttribute("href") === "#" + current) {
+      link.classList.add("active");
+    }
+  });
+});
+
+// ===== MOBILE MENU TOGGLE =====
+const hamburger = document.getElementById("hamburger");
+const navMenu = document.getElementById("nav-links");
+
+if (hamburger && navMenu) {
+  hamburger.addEventListener("click", () => {
+    navMenu.classList.toggle("show");
+  });
+}
 const projectsGrid = document.getElementById("projects-grid");
 const showAllBtn = document.getElementById("show-all-btn");
 const username = "Rithish4610";

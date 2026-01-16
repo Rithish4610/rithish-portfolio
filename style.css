@@ -1,3 +1,84 @@
+/* ===== COLORED NAV BOXES ===== */
+.nav-links {
+  display: flex;
+  gap: 14px;
+  list-style: none;
+}
+
+/* Base style */
+.nav-box {
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+/* Individual colors */
+.nav-box.about {
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+}
+
+.nav-box.skills {
+  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+}
+
+.nav-box.projects {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.nav-box.ai {
+  background: linear-gradient(135deg, #facc15, #eab308);
+  color: #020617;
+}
+
+.nav-box.contact {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+}
+
+/* Hover animation */
+.nav-box:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* Active (optional) */
+.nav-box.active {
+  outline: 2px solid white;
+}
+/* ===== NAVBAR BOXED LINKS ===== */
+.nav-links {
+  display: flex;
+  gap: 14px;
+  list-style: none;
+}
+
+.nav-links a {
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.nav-links a:hover {
+  background: #38bdf8;
+  color: #020617;
+  box-shadow: 0 10px 30px rgba(56, 189, 248, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Active / current section look (optional manual) */
+.nav-links a.active {
+  background: #38bdf8;
+  color: #020617;
+}
 /* ===== GENERAL ===== */
 body {
   font-family: 'Segoe UI', sans-serif;
@@ -11,9 +92,57 @@ body.dark {
   color:#f8fafc;
 }
 
+
+/* ===== GLASS NAVBAR ===== */
 nav {
-  display:flex; justify-content:space-between;
-  padding:20px; background:#020617;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 30px;
+  background: rgba(2, 6, 23, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ===== HAMBURGER ===== */
+.hamburger {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: white;
+}
+
+/* ===== MOBILE NAV ===== */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    flex-direction: column;
+    background: rgba(2, 6, 23, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 20px;
+    border-radius: 18px;
+    display: none;
+    gap: 12px;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+}
+
+.nav-box.active {
+  outline: 2px solid white;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.6);
 }
 
 nav ul { display:flex; gap:20px; }
