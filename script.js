@@ -1,3 +1,39 @@
+// ===== TYPING ANIMATION FOR BOT REPLIES =====
+function typeBotMessage(text) {
+  const msg = document.createElement("div");
+  msg.className = "message bot";
+  chatArea.appendChild(msg);
+  chatArea.scrollTop = chatArea.scrollHeight;
+
+  let i = 0;
+  const typingSpeed = 30; // ms per letter
+
+  const interval = setInterval(() => {
+    msg.textContent += text.charAt(i);
+    i++;
+    chatArea.scrollTop = chatArea.scrollHeight;
+    if (i === text.length) {
+      clearInterval(interval);
+    }
+  }, typingSpeed);
+}
+// ===== SCROLL REVEAL LOGIC =====
+const reveals = document.querySelectorAll(".reveal");
+
+function revealOnScroll() {
+  const windowHeight = window.innerHeight;
+  const revealPoint = 100;
+
+  reveals.forEach(el => {
+    const revealTop = el.getBoundingClientRect().top;
+    if (revealTop < windowHeight - revealPoint) {
+      el.classList.add("active");
+    }
+  });
+}
+
+window.addEventListener("scroll", revealOnScroll);
+revealOnScroll(); // run on load
 // ===== ACTIVE NAV LINK ON SCROLL =====
 const sections = document.querySelectorAll("section");
 const navLinks = document.querySelectorAll(".nav-box");
@@ -90,17 +126,51 @@ function addMessage(text, type) {
   chatArea.scrollTop = chatArea.scrollHeight;
 }
 
-function getBotReply(text) {
-  text = text.toLowerCase();
-  if(text.includes("name")) return "My name is Rithish Kannan.";
-  if(text.includes("skills")) return "Python, C, C++, HTML, CSS, JavaScript, AI & ML.";
-  if(text.includes("education")) return "2nd year BE CSE (AI & ML) student.";
-  if(text.includes("projects")) return "Check out my projects above on GitHub!";
-  if(text.includes("contact")) return "Email: rithish4610@gmail.com | Phone: 9363613681";
-  return "Ask me about skills, projects, education, or contact info 😊";
+
+function getBotReply(message) {
+  const text = message.toLowerCase();
+
+  if (text.includes("hi") || text.includes("hello")) {
+    return "Hello 👋 I'm Rithish's AI assistant. Ask me about his skills, projects, education, or contact details!";
+  }
+
+  if (text.includes("name")) {
+    return "His name is Rithish Kannan, a Computer Science student specializing in AI & ML.";
+  }
+
+  if (text.includes("skills")) {
+    return "Rithish is skilled in Python, C, C++, HTML, CSS, JavaScript, and AI/ML. He is currently learning Java and full-stack development.";
+  }
+
+  if (text.includes("projects")) {
+    return "Rithish has built multiple real-world projects including web apps, games, AI-based systems, and automation tools. You can explore them above in the Projects section 🚀";
+  }
+
+  if (text.includes("education") || text.includes("study")) {
+    return "Rithish is currently a 2nd year BE Computer Science student specializing in Artificial Intelligence & Machine Learning (AIML).";
+  }
+
+  if (text.includes("resume") || text.includes("cv")) {
+    return "You can download Rithish's resume using the 'Download Resume' button on this page 📄";
+  }
+
+  if (text.includes("contact") || text.includes("email") || text.includes("phone")) {
+    return "You can contact Rithish via email at rithish4610@gmail.com or phone at 9363613681.";
+  }
+
+  if (text.includes("github")) {
+    return "Here is Rithish's GitHub profile: https://github.com/Rithish4610";
+  }
+
+  if (text.includes("linkedin")) {
+    return "Here is Rithish's LinkedIn profile: https://www.linkedin.com/in/rithish-kannan-22032007r/";
+  }
+
+  return "🤖 I didn’t quite understand that. Try asking about skills, projects, education, resume, or contact details.";
 }
 
 input.addEventListener("input", () => { typingText.textContent = input.value; sendBtn.disabled = input.value.trim() === ""; });
+
 
 function sendMessage() {
   const text = input.value.trim();
@@ -109,11 +179,20 @@ function sendMessage() {
   input.value=""; typingText.textContent="";
   sendBtn.disabled=true;
   typingIndicator.style.display="block";
-  setTimeout(()=>{
-    typingIndicator.style.display="none";
-    addMessage(getBotReply(text),"bot");
-  },800);
+  setTimeout(() => {
+    typingIndicator.style.display = "none";
+    const reply = getBotReply(text);
+    typeBotMessage(reply);
+  }, 800);
 }
+// ===== FLOATING AI BOT TOGGLE =====
+const aiBtn = document.getElementById("ai-float-btn");
+const aiSection = document.getElementById("ai-bot");
+
+aiBtn.addEventListener("click", () => {
+  aiSection.classList.toggle("hidden-chat");
+  aiSection.scrollIntoView({ behavior: "smooth" });
+});
 
 sendBtn.addEventListener("click", sendMessage);
 input.addEventListener("keypress",(e)=>{ if(e.key==="Enter" && !sendBtn.disabled) sendMessage(); });
