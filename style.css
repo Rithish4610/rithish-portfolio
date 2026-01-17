@@ -1,3 +1,56 @@
+/* Social icons styling - neon glow & animated pulse */
+.social-icons {
+  display: flex;
+  gap: 22px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.social-icons a {
+  font-size: 30px;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* GitHub Glow */
+.social-icons a:nth-child(1) i {
+  color: #000;
+  text-shadow:
+    0 0 5px #000,
+    0 0 10px #000,
+    0 0 20px #000;
+}
+
+/* LinkedIn Glow */
+.social-icons a:nth-child(2) i {
+  color: #0077b5;
+  text-shadow:
+    0 0 5px #0077b5,
+    0 0 10px #0077b5,
+    0 0 20px #0077b5;
+}
+
+/* Hover effect */
+.social-icons a:hover {
+  transform: scale(1.25);
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px currentColor;
+  }
+  50% {
+    text-shadow: 0 0 20px currentColor;
+  }
+  100% {
+    text-shadow: 0 0 5px currentColor;
+  }
+}
+
+.social-icons i {
+  animation: glow 2s infinite ease-in-out;
+}
 /* ===== PROJECT CARDS INSIDE CHAT ===== */
 .project-card-chat {
   background: #020617;
