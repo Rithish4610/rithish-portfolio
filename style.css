@@ -364,3 +364,36 @@ html {
 .contact-card.linkedin { background:#0077b5; }
 .contact-card.email { background:#f97316; }
 .contact-card.phone { background:#16a34a; }
+
+/* ABOUT ME SECTION */
+.about-section {
+  max-width: 900px;
+  margin: 80px auto;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 25px rgba(0, 119, 181, 0.15);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #0077b5;
+  text-shadow: 0 0 12px rgba(0, 119, 181, 0.6);
+}
+
+.about-text {
+  font-size: 17px;
+  line-height: 1.9;
+  color: #eaeaea;
+  margin-bottom: 18px;
+  text-align: justify;
+}
+
+.about-text span {
+  color: #00c6ff;
+  font-weight: 600;
+  text-shadow: 0 0 6px rgba(0, 198, 255, 0.8);
+}
